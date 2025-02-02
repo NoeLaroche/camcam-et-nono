@@ -16,17 +16,36 @@
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: #F5F5DC;
+            text-align: center;
+            padding: 10px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .chart-container {
+            width: 90vw;
+            max-width: 320px;
+            height: auto;
+            display: flex;
+            justify-content: center;
         }
 
         canvas {
-            max-width: 300px;
+            width: 100% !important;
+            height: auto !important;
         }
     </style>
 </head>
 
 <body>
-    <h2>Days Without My Girlfriend</h2>
-    <canvas id="donutChart"></canvas>
+    <h2>Calcul scientifique de la distance qu'il nous reste à faire</h2>
+    <div class="chart-container">
+        <canvas id="donutChart"></canvas>
+    </div>
+
     <script>
         const totalDays = 64;
         const daysWithoutGF = 40; // Change this value as needed
@@ -36,7 +55,7 @@
         new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Pas ensemble', 'Ensemble'],
+                labels: ['Encore à faire', 'Bravo, déjà fait !'],
                 datasets: [{
                     data: [daysWithoutGF, daysWithGF],
                     backgroundColor: ['#DC143C', '#00FF00'],
@@ -45,10 +64,15 @@
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false,
+                maintainAspectRatio: true,
                 plugins: {
                     legend: {
-                        position: 'bottom'
+                        position: 'bottom',
+                        labels: {
+                            font: {
+                                size: 14
+                            }
+                        }
                     }
                 }
             }
