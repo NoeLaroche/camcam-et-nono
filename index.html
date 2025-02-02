@@ -37,6 +37,22 @@
             width: 100% !important;
             height: auto !important;
         }
+
+
+
+        .m-plus-rounded-1c-regular {
+            font-family: "M PLUS Rounded 1c", serif;
+            font-weight: 800;
+            font-style: normal;
+        }
+
+        #progress-text {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: darkgreen;
+            font-family: m-plus-rounded-1c-regular;
+        }
     </style>
 </head>
 
@@ -45,6 +61,7 @@
     <div class="chart-container">
         <canvas id="donutChart"></canvas>
     </div>
+    <p id="progress-text"></p>
 
     <script>
         // Définir la date de départ (le dernier jour où tu as vu ta copine)
@@ -58,7 +75,11 @@
         const totalDays = 64;
         const daysWithGF = totalDays - daysWithoutGF;
 
+        // Calcul du pourcentage d'avancement
+        const progressPercentage = ((daysWithoutGF / totalDays) * 100).toFixed(2);
 
+        // Mise à jour du texte du pourcentage
+        document.getElementById("progress-text").textContent = `Avancement : ${progressPercentage}%`;
 
         // Création du graphique
         const ctx = document.getElementById('donutChart').getContext('2d');
@@ -80,7 +101,7 @@
                         position: 'bottom',
                         labels: {
                             font: {
-                                size: 14
+                                size: 16
                             }
                         }
                     }
