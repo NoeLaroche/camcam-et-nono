@@ -41,23 +41,33 @@
 </head>
 
 <body>
-    <h2>Calcul scientifique de la distance qu'il nous reste à faire</h2>
+    <h2>Calcul scientifique de la distance qu'il nous reste à faire </h2>
     <div class="chart-container">
         <canvas id="donutChart"></canvas>
     </div>
 
     <script>
+        // Définir la date de départ (le dernier jour où tu as vu ta copine)
+        const startDate = new Date("2025-01-14"); // Remplace par la vraie date
+        const today = new Date();
+
+        // Calculer le nombre de jours écoulés
+        const daysWithoutGF = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+
+        // Durée totale estimée (ex: 64 jours d'attente)
         const totalDays = 64;
-        const daysWithoutGF = 40; // Change this value as needed
         const daysWithGF = totalDays - daysWithoutGF;
 
+
+
+        // Création du graphique
         const ctx = document.getElementById('donutChart').getContext('2d');
         new Chart(ctx, {
             type: 'doughnut',
             data: {
                 labels: ['Encore à faire', 'Bravo, déjà fait !'],
                 datasets: [{
-                    data: [daysWithoutGF, daysWithGF],
+                    data: [daysWithGF, daysWithoutGF],
                     backgroundColor: ['#DC143C', '#00FF00'],
                     hoverBackgroundColor: ['#DC143C', '#00FF00']
                 }]
