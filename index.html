@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Days Without My Girlfriend</title>
+    <title>Calcul scientifique de la distance</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
@@ -36,11 +36,11 @@
         new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Without GF', 'With GF'],
+                labels: ['Pas ensemble', 'Ensemble'],
                 datasets: [{
                     data: [daysWithoutGF, daysWithGF],
-                    backgroundColor: ['#DC143C', '#90EE90'],
-                    hoverBackgroundColor: ['#DC143C', '#90EE90']
+                    backgroundColor: ['#DC143C', '#00FF00'],
+                    hoverBackgroundColor: ['#DC143C', '#00FF00']
                 }]
             },
             options: {
