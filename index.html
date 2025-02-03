@@ -38,20 +38,10 @@
             height: auto !important;
         }
 
-
-
-        .m-plus-rounded-1c-regular {
-            font-family: "M PLUS Rounded 1c", serif;
-            font-weight: 800;
-            font-style: normal;
-        }
-
         #progress-text {
             margin-top: 15px;
             font-size: 1.2rem;
             font-weight: bold;
-            color: darkgreen;
-            font-family: m-plus-rounded-1c-regular;
         }
     </style>
 </head>
@@ -64,19 +54,19 @@
     <p id="progress-text"></p>
 
     <script>
-        // Définir la date de départ (le dernier jour où tu as vu ta copine)
-        const startDate = new Date("2025-01-14"); // Remplace par la vraie date
-        const today = new Date();
+        // Définir la date et l'heure de départ (le dernier moment où tu as vu ta copine)
+        const startDate = new Date("2025-01-14T00:00:00"); // Remplace par la vraie date et heure
+        const now = new Date();
 
-        // Calculer le nombre de jours écoulés
-        const daysWithoutGF = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+        // Calculer le nombre d'heures écoulées depuis le départ
+        const hoursElapsed = Math.floor((now - startDate) / (1000 * 60 * 60));
 
-        // Durée totale estimée (ex: 64 jours d'attente)
-        const totalDays = 64;
-        const daysWithGF = totalDays - daysWithoutGF;
+        // Durée totale estimée en heures (64 jours * 24 heures)
+        const totalHours = 64 * 24;
+        const hoursRemaining = totalHours - hoursElapsed;
 
         // Calcul du pourcentage d'avancement
-        const progressPercentage = ((daysWithoutGF / totalDays) * 100).toFixed(2);
+        const progressPercentage = ((hoursElapsed / totalHours) * 100).toFixed(2);
 
         // Mise à jour du texte du pourcentage
         document.getElementById("progress-text").textContent = `Avancement : ${progressPercentage}%`;
@@ -86,9 +76,9 @@
         new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Encore à faire, courage !', 'Bravo, déjà fait !'],
+                labels: ['Encore à faire', 'Bravo, déjà fait !'],
                 datasets: [{
-                    data: [daysWithGF, daysWithoutGF],
+                    data: [hoursRemaining, hoursElapsed],
                     backgroundColor: ['#DC143C', '#00FF00'],
                     hoverBackgroundColor: ['#DC143C', '#00FF00']
                 }]
@@ -101,7 +91,7 @@
                         position: 'bottom',
                         labels: {
                             font: {
-                                size: 16
+                                size: 14
                             }
                         }
                     }
