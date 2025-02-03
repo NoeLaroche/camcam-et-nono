@@ -43,15 +43,27 @@
             font-size: 1.2rem;
             font-weight: bold;
         }
+
+        .distance-chart {
+            margin-top: 30px;
+            width: 90vw;
+            max-width: 600px;
+        }
     </style>
 </head>
 
 <body>
     <h2>Calcul scientifique de la distance qu'il nous reste à faire </h2>
+
     <div class="chart-container">
         <canvas id="donutChart"></canvas>
     </div>
     <p id="progress-text"></p>
+
+    <h2>Progression en distance</h2>
+    <div class="distance-chart">
+        <canvas id="lineChart"></canvas>
+    </div>
 
     <script>
         // Définir la date et l'heure de départ (le dernier moment où tu as vu ta copine)
@@ -67,13 +79,11 @@
 
         // Calcul du pourcentage d'avancement
         const progressPercentage = ((hoursElapsed / totalHours) * 100).toFixed(2);
-
-        // Mise à jour du texte du pourcentage
         document.getElementById("progress-text").textContent = `Avancement : ${progressPercentage}%`;
 
-        // Création du graphique
-        const ctx = document.getElementById('donutChart').getContext('2d');
-        new Chart(ctx, {
+        // Création du graphique circulaire (donut)
+        const ctx1 = document.getElementById('donutChart').getContext('2d');
+        new Chart(ctx1, {
             type: 'doughnut',
             data: {
                 labels: ['Encore à faire', 'Bravo, déjà fait !'],
@@ -93,6 +103,70 @@
                             font: {
                                 size: 14
                             }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Distance totale et distance parcourue
+        const totalDistance = 16738; // Distance en km
+        const distanceTraveled = (hoursElapsed / totalHours) * totalDistance;
+        const distanceRemaining = totalDistance - distanceTraveled;
+
+        // Générer les données pour le graphique linéaire
+        const labels = [];
+        const traveledData = [];
+        const totalData = [];
+
+        for (let i = 0; i <= totalHours; i += 12) { // Incrément toutes les 12 heures
+            labels.push(`${i / 24} jours`);
+            traveledData.push((i / totalHours) * totalDistance);
+            totalData.push(totalDistance);
+        }
+
+        // Création du graphique linéaire (progression en distance)
+        const ctx2 = document.getElementById('lineChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Distance parcourue (km)',
+                    data: traveledData,
+                    borderColor: '#00FF00',
+                    backgroundColor: 'rgba(0, 255, 0, 0.2)',
+                    tension: 0.3,
+                    fill: true
+                },
+                {
+                    label: 'Distance totale (km)',
+                    data: totalData,
+                    borderColor: '#DC143C',
+                    borderDash: [5, 5],
+                    tension: 0.3,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Temps écoulé (jours)'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Distance (km)'
                         }
                     }
                 }
