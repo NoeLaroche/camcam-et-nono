@@ -44,16 +44,30 @@
             font-weight: bold;
         }
 
-        .distance-chart {
-            margin-top: 30px;
+        .progress-container {
             width: 90vw;
-            max-width: 600px;
+            max-width: 400px;
+            background-color: #ddd;
+            border-radius: 10px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 25px;
+            width: 0%;
+            background-color: #4CAF50;
+            text-align: center;
+            line-height: 25px;
+            color: white;
+            font-weight: bold;
+            transition: width 0.5s ease-in-out;
         }
     </style>
 </head>
 
 <body>
-    <h2>Calcul scientifique de la distance qu'il nous reste à faire </h2>
+    <h2>Calcul scientifique de la distance qu'il nous reste à faire</h2>
 
     <div class="chart-container">
         <canvas id="donutChart"></canvas>
@@ -61,8 +75,8 @@
     <p id="progress-text"></p>
 
     <h2>Progression en distance</h2>
-    <div class="distance-chart">
-        <canvas id="lineChart"></canvas>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar">0%</div>
     </div>
 
     <script>
@@ -109,69 +123,18 @@
             }
         });
 
-        // Distance totale et distance parcourue
+        // Distance totale et distance parcourue (MODIFIE LA VALEUR ICI)
         const totalDistance = 16738; // Distance en km
-        const distanceTraveled = (hoursElapsed / totalHours) * totalDistance;
-        const distanceRemaining = totalDistance - distanceTraveled;
+        const distanceTraveled = 20; // METS À JOUR CETTE VALEUR
 
-        // Générer les données pour le graphique linéaire
-        const labels = [];
-        const traveledData = [];
-        const totalData = [];
+        // Calcul du pourcentage de progression
+        const distancePercentage = ((distanceTraveled / totalDistance) * 100).toFixed(2);
 
-        for (let i = 0; i <= totalHours; i += 12) { // Incrément toutes les 12 heures
-            labels.push(`${i / 24} jours`);
-            traveledData.push((i / totalHours) * totalDistance);
-            totalData.push(totalDistance);
-        }
+        // Mise à jour de la barre de progression
+        const progressBar = document.getElementById("progressBar");
+        progressBar.style.width = `${distancePercentage}%`;
+        progressBar.textContent = `${distancePercentage}%`;
 
-        // Création du graphique linéaire (progression en distance)
-        const ctx2 = document.getElementById('lineChart').getContext('2d');
-        new Chart(ctx2, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Distance parcourue (km)',
-                    data: traveledData,
-                    borderColor: '#00FF00',
-                    backgroundColor: 'rgba(0, 255, 0, 0.2)',
-                    tension: 0.3,
-                    fill: true
-                },
-                {
-                    label: 'Distance totale (km)',
-                    data: totalData,
-                    borderColor: '#DC143C',
-                    borderDash: [5, 5],
-                    tension: 0.3,
-                    fill: false
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                },
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Temps écoulé (jours)'
-                        }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Distance (km)'
-                        }
-                    }
-                }
-            }
-        });
     </script>
 </body>
 
